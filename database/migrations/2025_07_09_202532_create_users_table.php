@@ -9,7 +9,12 @@ return new class extends Migration {
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
+            
+            // Remove 'name' and add separate name fields
+            $table->string('firstname', 100);
+            $table->string('middlename', 100)->nullable();
+            $table->string('lastname', 100);
+
             $table->string('email', 100)->nullable()->unique();
             $table->string('phone', 15)->unique();
             $table->enum('gender', ['male', 'female', 'other'])->nullable();

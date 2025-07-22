@@ -14,81 +14,113 @@ use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
-public function store(Request $request)
-{
-    $request->validate([
-        'name'     => 'required|string|max:100',
-        'email'    => 'required|email|unique:users,email',
-        'phone'    => 'required|string|unique:users,phone',
-        'gender'   => 'required|in:male,female,other',
-        'password' => 'required|min:6|confirmed',
-        'role'     => 'required|in:user,customer',
-    ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'firstname'   => 'required|string|max:100',
+            'middlename'  => 'nullable|string|max:100',
+            'lastname'    => 'required|string|max:100',
+            'email'       => 'required|email|unique:users,email',
+            'phone'       => 'required|string|unique:users,phone',
+            'gender'      => 'required|in:male,female,other',
+            'password'    => 'required|min:6|confirmed',
+            'role'        => 'required|in:user,customer',
+        ]);
 
-    $plainPassword = $request->password;
+        $plainPassword = $request->password;
 
-    $user = User::create([
-        'name'              => $request->name,
-        'email'             => $request->email,
-        'phone'             => $request->phone,
-        'gender'            => $request->gender,
-        'password'          => Hash::make($plainPassword),
-        'original_password' => $plainPassword, // ⚠️ store only if absolutely required
-        'is_verified'       => 0,
-        'role'              => $request->role,
-    ]);
+        // Concatenate full name for 'name' field if you still need it, or remove it if your model has firstname etc.
+        $fullName = $request->firstname 
+                  . ($request->middlename ? ' ' . $request->middlename : '') 
+                  . ' ' . $request->lastname;
 
-    Auth::login($user);
+        $user = User::create([
+            'firstname'         => $request->firstname,
+            'middlename'        => $request->middlename,
+            'lastname'          => $request->lastname,
+            'name'              => $fullName, // optional, remove if not used in DB/model
+            'email'             => $request->email,
+            'phone'             => $request->phone,
+            'gender'            => $request->gender,
+            'password'          => Hash::make($plainPassword),
+            'original_password' => $plainPassword, // ⚠️ store only if absolutely required
+            'is_verified'       => 0,
+            'role'              => $request->role,
+        ]);
 
-    $otp = rand(100000, 999999);
+        Auth::login($user);
 
-    OtpVerification::create([
-        'user_id'   => $user->id,
-        'otp_code'  => $otp,
-        'expiresAt' => Carbon::now()->addMinutes(10),
-    ]);
+        $otp = rand(100000, 999999);
 
-    Mail::raw("Your OTP is: $otp\nPassword: $plainPassword", function ($message) use ($user) {
-        $message->to($user->email)->subject('Your OTP & Login Password');
-    });
+        OtpVerification::create([
+            'user_id'   => $user->id,
+            'otp_code'  => $otp,
+            'expiresAt' => Carbon::now()->addMinutes(10),
+        ]);
 
-    SmsHelper::sendOtp($user->phone, "OTP: $otp, Password: $plainPassword");
+        Mail::raw("Your OTP is: $otp\nPassword: $plainPassword", function ($message) use ($user) {
+            $message->to($user->email)->subject('Your OTP & Login Password');
+        });
 
-    Session::put('otp_user_id', $user->id);
+        SmsHelper::sendOtp($user->phone, "OTP: $otp, Password: $plainPassword");
 
-    return redirect()->route('verify-otp')->with('success', 'OTP and password sent. Please verify.');
-}
-public function index()
-{
-    $customers = User::whereIn('role', ['user', 'customer'])->paginate(5);
-    return view('content.pages.customer-list', compact('customers'));
-}
-public function edit($id)
+        Session::put('otp_user_id', $user->id);
+
+        return redirect()->route('verify-otp')->with('success', 'OTP and password sent. Please verify.');
+    }
+
+    public function index()
+    {
+        $customers = User::whereIn('role', ['user', 'customer'])->paginate(5);
+        return view('content.pages.customer-list', compact('customers'));
+    }
+
+    public function edit($id)
+    {
+        $customer = User::findOrFail($id);
+        return view('content.pages.customer-edit', compact('customer'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'firstname'  => 'required|string|max:100',
+            'middlename' => 'nullable|string|max:100',
+            'lastname'   => 'required|string|max:100',
+            'email'      => 'required|email|unique:users,email,' . $id,
+            'phone'      => 'required|string',
+            'gender'     => 'required|in:male,female,other',
+            'role'       => 'required|in:user,customer'
+        ]);
+
+        $customer = User::findOrFail($id);
+
+        $fullName = $request->firstname 
+                  . ($request->middlename ? ' ' . $request->middlename : '') 
+                  . ' ' . $request->lastname;
+
+        $customer->update([
+            'firstname'  => $request->firstname,
+            'middlename' => $request->middlename,
+            'lastname'   => $request->lastname,
+            'name'       => $fullName,  // optional, if you keep the `name` field
+            'email'      => $request->email,
+            'phone'      => $request->phone,
+            'gender'     => $request->gender,
+            'role'       => $request->role,
+        ]);
+
+        return redirect()->route('customers.list')->with('success', 'Customer updated successfully.');
+    }
+
+    public function create()
+    {
+        return view('content.pages.customer-create');
+    }
+    public function show($id)
 {
     $customer = User::findOrFail($id);
-    return view('content.pages.customer-edit', compact('customer'));
-}
-public function update(Request $request, $id)
-{
-    $request->validate([
-        'name'  => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email,' . $id,
-        'phone' => 'required|string',
-        'gender'=> 'required',
-        'role'  => 'required|in:user,customer'
-    ]);
-
-    $customer = User::findOrFail($id);
-    $customer->update($request->all());
-
-    return redirect()->route('customers.list')->with('success', 'Customer updated successfully.');
-}
-
-
-
-public function create()
-{
-    return view('content.pages.customer-create');
+    return view('content.pages.show', compact('customer'));
 }
 
 }

@@ -36,10 +36,14 @@ $navbarDetached = ($navbarDetached ?? '');
       <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
         <!-- Search -->
         <div class="navbar-nav align-items-center">
-          <div class="nav-item d-flex align-items-center">
-            <i class="bx bx-search bx-md"></i>
-            <input type="text" class="form-control border-0 shadow-none ps-1 ps-sm-2" placeholder="Search..." aria-label="Search...">
-          </div>
+<div class="text-warning fw-bold">
+  🟡 Gold: ₹{{ $goldRate ?? 'N/A' }} /g <br>
+  <small class="text-muted">({{ $goldDate ?? 'No date' }})</small>
+</div>
+<div class="text-secondary fw-bold">
+  ⚪ Silver: ₹{{ $silverRate ?? 'N/A' }} /g <br>
+  <small class="text-muted">({{ $silverDate ?? 'No date' }})</small>
+</div>
         </div>
         <!-- /Search -->
         <ul class="navbar-nav flex-row align-items-center ms-auto">
@@ -48,13 +52,24 @@ $navbarDetached = ($navbarDetached ?? '');
           <!-- <li class="nav-item lh-1 me-4"> -->
             <!-- <a class="github-button" href="{{config('variables.repository')}}" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star themeselection/sneat-html-laravel-admin-template-free on GitHub">Star</a> -->
           <!-- </li> -->
-@if(Session::has('name') && Session::get('role') === 'admin')
+@if(Auth::check())
   <div class="mt-2">
-    <h6 class="mb-0">{{ Session::get('name') }}</h6>
-    <small class="text-muted">Admin</small>
+    <h6 class="mb-0">
+      {{ Auth::user()->firstname }} {{ Auth::user()->middlename ?? '' }} {{ Auth::user()->lastname }}
+    </h6>
+    <small class="text-muted">
+      @if(Auth::user()->role === 'admin')
+        Admin
+      @elseif(Auth::user()->role === 'user')
+        User
+      @elseif(Auth::user()->role === 'customer')
+        Customer
+      @else
+        {{ ucfirst(Auth::user()->role) }}
+      @endif
+    </small>
   </div>
 @endif
-
 
 
           <!-- User -->

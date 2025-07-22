@@ -20,52 +20,64 @@
       </div>
     @endif
 
-<form action="{{ route('customer.store') }}" method="POST">
+    <form action="{{ route('customer.store') }}" method="POST">
       @csrf
 
-      <div class="mb-3">
-        <label class="form-label">Name <span class="text-danger">*</span></label>
-        <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
-      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">First Name <span class="text-danger">*</span></label>
+          <input type="text" name="firstname" class="form-control" value="{{ old('firstname') }}" required>
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label">Email <span class="text-danger">*</span></label>
-        <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
-      </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Middle Name</label>
+          <input type="text" name="middlename" class="form-control" value="{{ old('middlename') }}">
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label">Phone <span class="text-danger">*</span></label>
-        <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" required>
-      </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Last Name <span class="text-danger">*</span></label>
+          <input type="text" name="lastname" class="form-control" value="{{ old('lastname') }}" required>
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label">Gender <span class="text-danger">*</span></label>
-        <select name="gender" class="form-control" required>
-          <option value="">Select Gender</option>
-          <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
-          <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
-          <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
-        </select>
-      </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Email <span class="text-danger">*</span></label>
+          <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label">Password <span class="text-danger">*</span></label>
-        <input type="password" name="password" class="form-control" required>
-      </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Phone <span class="text-danger">*</span></label>
+          <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" required>
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label">Confirm Password <span class="text-danger">*</span></label>
-        <input type="password" name="password_confirmation" class="form-control" required>
-      </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Gender <span class="text-danger">*</span></label>
+          <select name="gender" class="form-control" required>
+            <option value="">Select Gender</option>
+            <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
+            <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
+            <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
+          </select>
+        </div>
 
-<div class="mb-3">
-  <label class="form-label">Role <span class="text-danger">*</span></label>
-  <select name="role" class="form-control" required>
-    <option value="">Select Role</option>
-    <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
-    <option value="customer" {{ old('role') == 'customer' ? 'selected' : '' }}>Customer</option>
-  </select>
-</div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Password <span class="text-danger">*</span></label>
+          <input type="password" name="password" class="form-control" required>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Confirm Password <span class="text-danger">*</span></label>
+          <input type="password" name="password_confirmation" class="form-control" required>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Role <span class="text-danger">*</span></label>
+          <select name="role" class="form-control" required>
+            <option value="">Select Role</option>
+            <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
+            <option value="customer" {{ old('role') == 'customer' ? 'selected' : '' }}>Customer</option>
+          </select>
+        </div>
+      </div>
 
       <div class="text-start">
         <button type="submit" class="btn btn-success">Add</button>

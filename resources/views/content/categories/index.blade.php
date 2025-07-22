@@ -23,6 +23,8 @@
         <tr>
           <th>ID</th>
           <th>Category Name</th>
+          <th>Rate/Gram</th>
+          <th>Rate Date</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -31,6 +33,8 @@
         <tr>
           <td>{{ $category->id }}</td>
           <td>{{ $category->name }}</td>
+          <td>{{ $category->rate_per_gram ?? '-' }}</td>
+          <td>{{ $category->rate_date ? \Carbon\Carbon::parse($category->rate_date)->format('d-m-Y') : '-' }}</td>
           <td>
             <a href="{{ route('category.edit', $category->id) }}" class="btn btn-sm text-white" style="background-color: #00CFE8;">Edit</a>
             <form action="{{ route('category.destroy', $category->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Delete this category?');">
@@ -42,19 +46,18 @@
         </tr>
         @empty
         <tr>
-          <td colspan="3" class="text-center">No categories found.</td>
+          <td colspan="5" class="text-center">No categories found.</td>
         </tr>
         @endforelse
       </tbody>
     </table>
   </div>
 </div>
-  {{-- ✅ Pagination --}}
-  <div class="mt-3 ms-3">
-    {{ $categories->links('pagination::bootstrap-5') }}
-  </div>
-</div>
 
+{{-- ✅ Pagination --}}
+<div class="mt-3 ms-3">
+  {{ $categories->links('pagination::bootstrap-5') }}
+</div>
 @endsection
 
 @section('scripts')

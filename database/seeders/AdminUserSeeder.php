@@ -10,15 +10,16 @@ class AdminUserSeeder extends Seeder
 {
     public function run()
     {
-        $adminEmail = 'admin@digigoldapp.com';
-        $adminName = 'DigiGoldAdmin';
-        $strongPassword = 'DG@dm1n#2025!'; // Strong password
+        $adminEmail = 'admin@potgoldapp.com';
+        $strongPassword = 'PG@dm1n#2025!'; // Strong password
 
         if (!User::where('email', $adminEmail)->exists()) {
             User::create([
-                'name'              => $adminName,
+                'firstname'         => 'Pot',
+                'middlename'        => 'Gold',
+                'lastname'          => 'Admin',
                 'email'             => $adminEmail,
-                'phone'             => '9000000001',
+                'phone'             => '9023098767',
                 'gender'            => 'male',
                 'password'          => Hash::make($strongPassword),
                 'original_password' => $strongPassword, // ⚠️ Not secure for production

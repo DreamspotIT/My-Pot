@@ -33,7 +33,13 @@
         @foreach ($customers as $customer)
         <tr>
           <td>{{ $customer->id }}</td>
-          <td>{{ $customer->name }}</td>
+          <td>
+            {{ $customer->firstname }}
+            @if ($customer->middlename)
+              {{ $customer->middlename }}
+            @endif
+            {{ $customer->lastname }}
+          </td>
           <td>{{ $customer->email }}</td>
           <td>{{ $customer->phone }}</td>
           <td>{{ $customer->gender }}</td>

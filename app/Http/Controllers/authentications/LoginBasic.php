@@ -34,11 +34,13 @@ class LoginBasic extends Controller
             Auth::login($user);
 
             // Optional: Store extras in session if needed
-                Session::put('name', $user->name);   // ← this was missing!
-
-            Session::put('role', $user->role);
-
+Session::put('firstname', $user->firstname);
+Session::put('middlename', $user->middlename);
+Session::put('lastname', $user->lastname);
+Session::put('role', $user->role);
             // ✅ Redirect based on role
+            Session::put('name', trim($user->firstname . ' ' . ($user->middlename ?? '') . ' ' . $user->lastname));
+
             return redirect()->route('dashboard-analytics');
         } else {
             return back()->withErrors(['login_error' => 'Invalid credentials'])->withInput();

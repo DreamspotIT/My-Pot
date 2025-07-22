@@ -7,6 +7,8 @@
     use App\Http\Controllers\layouts\Fluid;
     use App\Http\Controllers\layouts\Container;
     use App\Http\Controllers\layouts\Blank;
+    use App\Http\Controllers\RateController;
+
     use App\Http\Controllers\pages\AccountSettingsAccount;
     use App\Http\Controllers\pages\AccountSettingsNotifications;
     use App\Http\Controllers\pages\AccountSettingsConnections;
@@ -76,6 +78,8 @@
 
 
     // Main Page Route
+    Route::get('/dashboard-analytics', [RateController::class, 'index'])->name('dashboard-analytics');
+
     Route::get('/dashboard-analytics', [Analytics::class, 'index'])->name('dashboard-analytics');
     Route::get('/', [LoginBasic::class, 'index'])->name('auth-index');
     Route::post('/auth/index', [LoginBasic::class, 'login'])->name('login.process');

@@ -24,48 +24,51 @@
       @csrf
       @method('PUT')
 
-      <div class="mb-3">
-        <label class="form-label">Name <span class="text-danger">*</span></label>
-        <div class="col-sm-10">
-          <input type="text" name="name" value="{{ $customer->name }}" class="form-control" required>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">First Name <span class="text-danger">*</span></label>
+          <input type="text" name="firstname" value="{{ old('firstname', $customer->firstname) }}" class="form-control" required>
         </div>
-      </div>
 
-      <div class="mb-3">
-        <label class="col-sm-2 col-form-label">Email <span class="text-danger">*</span></label>
-        <div class="col-sm-10">
-          <input type="email" name="email" value="{{ $customer->email }}" class="form-control" required>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Middle Name</label>
+          <input type="text" name="middlename" value="{{ old('middlename', $customer->middlename) }}" class="form-control">
         </div>
-      </div>
 
-      <div class="mb-3">
-        <label class="col-sm-2 col-form-label">Phone <span class="text-danger">*</span></label>
-        <div class="col-sm-10">
-          <input type="text" name="phone" value="{{ $customer->phone }}" class="form-control" required>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Last Name <span class="text-danger">*</span></label>
+          <input type="text" name="lastname" value="{{ old('lastname', $customer->lastname) }}" class="form-control" required>
         </div>
-      </div>
 
-      <div class="mb-3">
-        <label class="col-sm-2 col-form-label">Gender <span class="text-danger"> *</span></label>
-        <div class="col-sm-10">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Email <span class="text-danger">*</span></label>
+          <input type="email" name="email" value="{{ old('email', $customer->email) }}" class="form-control" required>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Phone <span class="text-danger">*</span></label>
+          <input type="text" name="phone" value="{{ old('phone', $customer->phone) }}" class="form-control" required>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Gender <span class="text-danger">*</span></label>
           <select name="gender" class="form-control" required>
-            <option value="Male" {{ $customer->gender == 'Male' ? 'selected' : '' }}>Male</option>
-            <option value="Female" {{ $customer->gender == 'Female' ? 'selected' : '' }}>Female</option>
-            <option value="Other" {{ $customer->gender == 'Other' ? 'selected' : '' }}>Other</option>
+            <option value="">Select Gender</option>
+            <option value="male" {{ old('gender', $customer->gender) == 'male' ? 'selected' : '' }}>Male</option>
+            <option value="female" {{ old('gender', $customer->gender) == 'female' ? 'selected' : '' }}>Female</option>
+            <option value="other" {{ old('gender', $customer->gender) == 'other' ? 'selected' : '' }}>Other</option>
+          </select>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Role <span class="text-danger">*</span></label>
+          <select name="role" class="form-control" required>
+            <option value="">Select Role</option>
+            <option value="customer" {{ old('role', $customer->role) == 'customer' ? 'selected' : '' }}>Customer</option>
+            <option value="user" {{ old('role', $customer->role) == 'user' ? 'selected' : '' }}>User</option>
           </select>
         </div>
       </div>
-      <div class="mb-3">
-  <label class="col-sm-2 col-form-label">Role <span class="text-danger">*</span></label>
-  <div class="col-sm-10">
-    <select name="role" class="form-control" required>
-      <option value="">Select Role</option>
-      <option value="customer" {{ $customer->role == 'customer' ? 'selected' : '' }}>Customer</option>
-      <option value="user" {{ $customer->role == 'user' ? 'selected' : '' }}>User</option>
-    </select>
-  </div>
-</div>
-
 
       <div class="text-start">
         <button type="submit" class="btn btn-success">Update</button>
