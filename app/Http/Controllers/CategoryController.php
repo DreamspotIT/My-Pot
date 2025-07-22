@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Category;
@@ -21,9 +22,15 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:categories,name',
+            'rate_per_gram' => 'required|numeric|min:0',
+            'rate_date' => 'required|date',
         ]);
 
-        Category::create($request->only('name'));
+        Category::create([
+            'name' => $request->name,
+            'rate_per_gram' => $request->rate_per_gram,
+            'rate_date' => $request->rate_date,
+        ]);
 
         return redirect()->route('category.index')->with('success', 'Category added successfully.');
     }
@@ -37,9 +44,15 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:categories,name,' . $category->id,
+            'rate_per_gram' => 'required|numeric|min:0',
+            'rate_date' => 'required|date',
         ]);
 
-        $category->update($request->only('name'));
+        $category->update([
+            'name' => $request->name,
+            'rate_per_gram' => $request->rate_per_gram,
+            'rate_date' => $request->rate_date,
+        ]);
 
         return redirect()->route('category.index')->with('success', 'Category updated successfully.');
     }

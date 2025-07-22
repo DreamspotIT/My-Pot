@@ -1,6 +1,6 @@
 @extends('layouts/blankLayout')
 
-@section('title', 'Login - Digigold')
+@section('title', 'Login - PotGold')
 
 @section('page-style')
 @vite(['resources/assets/vendor/scss/pages/page-auth.scss'])
@@ -222,7 +222,7 @@
     <div class="auth-form-wrapper">
       <!-- Logo -->
       <div class="mb-4">
-        <h4 class="text-heading">Welcome to Digigold! 👋</h4>
+        <h4 class="text-heading">Welcome to PotGold! 👋</h4>
         <p class="text-muted">Please sign-in to your account and start the adventure</p>
       </div>
 

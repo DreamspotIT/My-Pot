@@ -129,6 +129,24 @@
           "slug": "gold-discounts"
         }
       ]
-    }
-  ]
+    },
+    {
+    "name": "FAQ",
+    "icon": "menu-icon tf-icons bx bx-help-circle",
+    "slug": "faqs",
+    "submenu": [
+      {
+        "url": "faqs",
+        "name": "FAQ List",
+        "slug": "faq-list"
+      },
+      {
+        "url": "faqs/create",
+        "name": "Add FAQ",
+        "slug": "faq-create"
+      }
+    ]
+  }
+]
+  
 }

@@ -52,8 +52,10 @@
     use App\Http\Controllers\GoldDiscountController;
     use App\Http\Controllers\CategoryController;
     use App\Http\Controllers\SubCategoryController;
+     use App\Http\Controllers\FaqController;
+     // web.php
 
-
+Route::resource('faqs', FaqController::class);
     Route::resource('category', CategoryController::class);
     Route::get('/categories/list', [CategoryController::class, 'index'])->name('categories.list');
     Route::resource('subcategory', SubcategoryController::class);
@@ -78,7 +80,6 @@
 
 
     // Main Page Route
-    Route::get('/dashboard-analytics', [RateController::class, 'index'])->name('dashboard-analytics');
 
     Route::get('/dashboard-analytics', [Analytics::class, 'index'])->name('dashboard-analytics');
     Route::get('/', [LoginBasic::class, 'index'])->name('auth-index');

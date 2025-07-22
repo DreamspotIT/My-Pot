@@ -25,12 +25,11 @@
         @error('rate_per_gram') <small class="text-danger">{{ $message }}</small> @enderror
       </div>
 
-      <div class="mb-3">
-        <label for="rate_date" class="form-label">Rate Date <span class="text-danger">*</span></label>
-        <input type="date" class="form-control" id="rate_date" name="rate_date" value="{{ old('rate_date') }}" required>
-        @error('rate_date') <small class="text-danger">{{ $message }}</small> @enderror
-      </div>
-
+<div class="mb-3">
+  <label for="rate_date" class="form-label">Rate Date <span class="text-danger">*</span></label>
+  <input type="date" class="form-control" id="rate_date" name="rate_date" value="{{ old('rate_date', date('Y-m-d')) }}" required>
+  @error('rate_date') <small class="text-danger">{{ $message }}</small> @enderror
+</div>
       <div class="text-start">
         <button type="submit" class="btn btn-success">Add</button>
         <a href="{{ route('category.index') }}" class="btn btn-secondary">Cancel</a>
