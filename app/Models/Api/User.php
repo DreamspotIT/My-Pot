@@ -1,11 +1,52 @@
 <?php
 
-namespace App\Models\Models\Api;
+namespace App\Models\Api;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Model
+class User extends Authenticatable
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     */
+    protected $fillable = [
+        'firstname',
+        'middlename',
+        'lastname',
+        'email',
+        'phone',
+        'password',
+        'role',
+        'is_verified',
+        'gender',
+        'email_verified_at',
+        'remember_token',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays (e.g., API responses).
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * The attributes that should be appended when the model is serialized.
+     */
+    protected $appends = ['full_name'];
+
+    /**
+     * Accessor to get the full name (firstname + middlename + lastname).
+     */
+    public function getFullNameAttribute()
+    {
+        return trim("{$this->firstname} {$this->middlename} {$this->lastname}");
+    }
 }
