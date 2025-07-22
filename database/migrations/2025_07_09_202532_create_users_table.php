@@ -9,8 +9,7 @@ return new class extends Migration {
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            
-            // Remove 'name' and add separate name fields
+
             $table->string('firstname', 100);
             $table->string('middlename', 100)->nullable();
             $table->string('lastname', 100);
