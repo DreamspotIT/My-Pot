@@ -1,0 +1,134 @@
+{
+  "menu": [
+    {
+      "url": "/",
+      "name": "Dashboards",
+      "icon": "menu-icon tf-icons bx bx-home-smile",
+      "slug": "dashboard",
+      "badge": [
+        "danger",
+        "5"
+      ],
+      "submenu": [
+        {
+          "url": "/",
+          "name": "Analytics",
+          "slug": "dashboard-analytics"
+        },
+        {
+          "url": "https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo-1/dashboard/crm",
+          "name": "CRM",
+          "slug": "dashboard-crm",
+          "target": "_blank",
+          "badge": [
+            "label-primary fs-tiny",
+            "Pro"
+          ]
+        },
+        {
+          "url": "https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo-1/app/ecommerce/dashboard",
+          "name": "eCommerce",
+          "slug": "app-ecommerce-dashboard",
+          "target": "_blank",
+          "badge": [
+            "label-primary fs-tiny",
+            "Pro"
+          ]
+        },
+        {
+          "url": "https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo-1/app/logistics/dashboard",
+          "name": "Logistics",
+          "slug": "app-logistics-dashboard",
+          "target": "_blank",
+          "badge": [
+            "label-primary fs-tiny",
+            "Pro"
+          ]
+        },
+        {
+          "url": "https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo-1/app/academy/dashboard",
+          "name": "Academy",
+          "slug": "app-academy-dashboard",
+          "target": "_blank",
+          "badge": [
+            "label-primary fs-tiny",
+            "Pro"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Category",
+      "icon": "menu-icon tf-icons bx bx-category",
+      "slug": "category",
+      "submenu": [
+        {
+          "url": "categories/list",
+          "name": "Category List",
+          "slug": "category-list"
+        },
+        {
+          "url": "category/create",
+          "name": "Add Category",
+          "slug": "category-create"
+        }
+      ]
+    },
+    {
+      "name": "Subcategory",
+      "icon": "menu-icon tf-icons bx bx-subdirectory-left",
+      "slug": "subcategory",
+      "submenu": [
+        {
+          "url": "subcategory",
+          "name": "Subcategory List",
+          "slug": "subcategory-list"
+        },
+        {
+          "url": "subcategory/create",
+          "name": "Add Subcategory",
+          "slug": "subcategory-create"
+        }
+      ]
+    },
+    {
+      "name": "Customer",
+      "icon": "menu-icon tf-icons bx bx-user",
+      "slug": "customer",
+      "submenu": [
+        {
+          "url": "customers/list",
+          "name": "Customer List",
+          "slug": "customer-list"
+        },
+        {
+          "url": "customer/create",
+          "name": "Add Customer",
+          "slug": "customer-create"
+        }
+      ]
+    },
+    {
+      "name": "Gold",
+      "icon": "menu-icon tf-icons bx bx-diamond",
+      "slug": "gold",
+      "submenu": [
+        {
+          "url": "gold/items",
+          "name": "Gold Items",
+          "slug": "gold-items"
+        },
+        {
+          "url": "gold/offers",
+          "name": "Gold Offers",
+          "slug": "gold-offers"
+        },
+        {
+          "url": "gold/discounts",
+          "name": "Gold Discounts",
+          "slug": "gold-discounts"
+        }
+      ]
+    }
+  ]
+}
