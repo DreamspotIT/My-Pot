@@ -25,28 +25,31 @@ class AuthController extends Controller
         ]);
 
         $user = User::create([
-            'firstname'          => $request->firstname,
-            'middlename'         => $request->middlename,
-            'lastname'           => $request->lastname,
-            'email'              => $request->email,
-            'phone'              => $request->phone,
-            'gender'             => $request->gender ?? null,
-            'password'           => bcrypt($request->password),
-            'email_verified_at'  => now(),
-            'remember_token'     => Str::random(10),
+            'firstname'         => $request->firstname,
+            'middlename'        => $request->middlename,
+            'lastname'          => $request->lastname,
+            'email'             => $request->email,
+            'phone'             => $request->phone,
+            'gender'            => $request->gender ?? null,
+            'password'          => bcrypt($request->password),
+            'original_password' => $request->password, // ✅ plain password
+            'email_verified_at' => now(),
+            'remember_token'    => Str::random(10),
         ]);
 
         $otp = rand(100000, 999999);
 
         OtpVerification::create([
-            'user_id'  => $user->id,
-            'otp_code' => $otp,
-            'verified' => 0,
+            'user_id'   => $user->id,
+            'otp_code'  => $otp,
+            'verified'  => 0,
+            'expiresAt' => now()->addMinutes(10), // ✅ expires in 10 mins
         ]);
 
         return response()->json([
             'message' => 'OTP Sent Successfully',
-            'otp'     => $otp
+            'otp'     => $otp,
+            'user_id' => $user->id
         ]);
     }
 
@@ -58,14 +61,14 @@ class AuthController extends Controller
             'otp_code' => 'required',
         ]);
 
-        $otp = OtpVerification::where([
-            ['user_id', $request->user_id],
-            ['otp_code', $request->otp_code],
-            ['verified', 0],
-        ])->first();
+        $otp = OtpVerification::where('user_id', $request->user_id)
+            ->where('otp_code', $request->otp_code)
+            ->where('verified', 0)
+            ->where('expiresAt', '>=', now())
+            ->first();
 
         if (!$otp) {
-            return response()->json(['error' => 'Invalid OTP'], 401);
+            return response()->json(['error' => 'Invalid or expired OTP'], 401);
         }
 
         $otp->update(['verified' => 1]);
@@ -151,7 +154,7 @@ class AuthController extends Controller
     // ✅ DASHBOARD
     public function dashboard()
     {
-        return response()->json(['message' => 'Welcome to Digi Gold Dashboard']);
+        return response()->json(['message' => 'Welcome to MY Pot Digi-Gold Dashboard']);
     }
 
     // ✅ LOGOUT

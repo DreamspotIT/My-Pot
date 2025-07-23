@@ -9,14 +9,11 @@ return new class extends Migration {
     {
         Schema::create('otp_verifications', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('otp_code', 6);
-            $table->dateTime('expiresAt');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('otp_code');
+            $table->timestamp('expiresAt');
             $table->boolean('verified')->default(false);
-            $table->dateTime('createdAt')->useCurrent();
-            $table->dateTime('updatedAt')->useCurrent()->useCurrentOnUpdate();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

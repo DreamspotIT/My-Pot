@@ -21,7 +21,7 @@
     "autoprefixer": "^10.4.19",
     "axios": "^1.7.2",
     "babel-loader": "^9.1.3",
-    "browser-sync": "^2.29.3",
+    "browser-sync": "^3.0.4",
     "cross-env": "^7.0.3",
     "glob": "^10.4.5",
     "lodash": "^4.17.21",
@@ -30,11 +30,11 @@
     "resolve-url-loader": "5.0.0",
     "sass": "~1.76.0",
     "sass-loader": "14.0.0",
-    "vite": "^5.3.5"
+    "vite": "^7.0.5"
   },
   "overrides": {
     "prop-types": "15.8.1",
-  "sass": "~1.76.0"
+    "sass": "~1.76.0"
   },
   "resolutions": {
     "prop-types": "15.8.1",
@@ -84,10 +84,9 @@
     "boxicons": "~2.1.4",
     "highlight.js": "~11.9.0",
     "jquery": "~3.7.1",
+    "laravel-vite-plugin": "^1.3.0",
     "masonry-layout": "~4.2.2",
     "perfect-scrollbar": "~1.5.5",
-    "laravel-vite-plugin": "1.0.1",
-  "sass": "~1.76.0"
-
+    "sass": "~1.76.0"
   }
 }
